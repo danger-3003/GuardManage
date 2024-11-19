@@ -73,7 +73,7 @@ const Register = () => {
         });
 
         if (!result.canceled) {
-            console.log(result);
+            console.log(result.assets[0].uri);
             setPanImage(result.assets[0].uri);
         } else {
             setImageModal(prev=> !prev);        
