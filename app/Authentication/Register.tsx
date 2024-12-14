@@ -143,23 +143,23 @@ const Register = () => {
                 <Ionicons name="arrow-back-outline" size={25} color="#F0F4FF" />
             </Pressable>
             <View className="my-10 flex flex-col items-end justify-center">
-                <Text className="text-[#f0f4ff] font-extrabold text-4xl">
+                <Text className="text-[#f0f4ff] font-[Nunito-Bold] text-4xl">
                     Join Us
                 </Text>
-                <Text className="text-[#f0f4ff] font-light text-xl">
+                <Text className="text-[#f0f4ff] font-[Nunito-Regular] text-xl">
                     Create an Account to get started
                 </Text>
             </View>
             <ScrollView className="rounded-t-[2rem] bg-[#f0f4ff] shadow-2xl shadow-blue-100 mt-10 px-5 bottom-0 relative">
                 <View>
-                    <Text className="text-[#291D89] text-center font-extrabold text-3xl py-7">
+                    <Text className="text-[#291D89] text-center font-[Nunito-Bold] text-3xl py-7">
                         User Details
                     </Text>
                 </View>
                 <View className="w-full">
                     {/* Name Field */}
                     <View>
-                        <Text className="font-medium text-[#291D89] text-xl my-2">
+                        <Text className="font-[Nunito-SemiBold] text-[#291D89] text-xl my-2">
                             Name
                         </Text>
                         <View className="border border-[#291d89] rounded-xl flex flex-row justify-around items-center h-14 w-[100%]">
@@ -167,7 +167,7 @@ const Register = () => {
                                 placeholder="Enter your name"
                                 numberOfLines={1}
                                 value={userDetails.name}
-                                className="font-normal text-lg text-[#291D89] basis-[90%] ml-2"
+                                className="font-[Nunito-Regular] text-lg text-[#291D89] basis-[90%] ml-2"
                                 onChangeText={(text) => {
                                     setUserDetails({
                                         ...userDetails,
@@ -185,7 +185,7 @@ const Register = () => {
                     </View>
                     {/* Profile Upload */}
                     <View className="flex items-center justify-center">
-                        <Text className="font-medium text-[#291D89] text-xl my-2 w-full">
+                        <Text className="font-[Nunito-SemiBold] text-[#291D89] text-xl my-2 w-full">
                             Profile Picture
                         </Text>
                         {profileImage ? (
@@ -200,7 +200,7 @@ const Register = () => {
                                 className="bg-[#291d89] rounded-xl flex flex-row justify-center items-center h-14 w-[70%] px-10"
                                 onPress={pickProfileImageAsync}
                             >
-                                <Text className="text-[#f0f4ff] font-bold">
+                                <Text className="text-[#f0f4ff] font-[Nunito-Bold]">
                                     Upload Profile Picture
                                 </Text>
                                 <Fontisto name="picture" size={18} color="#f0f4ff" className="ml-5" />
@@ -210,7 +210,7 @@ const Register = () => {
                     {/* Age and DOB Field */}
                     <View className="flex items-center justify-between w-full flex-row">
                         <View className="w-[47%]">
-                            <Text className="font-medium text-[#291D89] text-xl my-2">
+                            <Text className="font-[Nunito-SemiBold] text-[#291D89] text-xl my-2">
                                 Age
                             </Text>
                             <View className="border border-[#291d89] rounded-xl flex flex-row justify-around h-14 items-center w-[100%]">
@@ -220,7 +220,7 @@ const Register = () => {
                                     maxLength={2}
                                     value={userDetails.age}
                                     keyboardType="number-pad"
-                                    className="font-normal text-lg text-[#291D89] basis-[80%] ml-2"
+                                    className="font-[Nunito-Regular] text-lg text-[#291D89] basis-[80%] ml-2"
                                     onChangeText={(text) => {
                                         setUserDetails({
                                             ...userDetails,
@@ -237,7 +237,7 @@ const Register = () => {
                             </View>
                         </View>
                         <View className="w-[47%]">
-                            <Text className="font-medium text-[#291D89] text-xl my-2">
+                            <Text className="font-[Nunito-SemiBold] text-[#291D89] text-xl my-2">
                                 Date of Birth
                             </Text>
                             <View className="border border-[#291d89] rounded-xl flex flex-row justify-around items-center h-14 w-[100%]">
@@ -246,7 +246,7 @@ const Register = () => {
                                     numberOfLines={1}
                                     maxLength={10}
                                     value={userDetails.dob}
-                                    className="font-normal text-lg text-[#291D89] w-[80%] ml-2"
+                                    className="font-[Nunito-Regular] text-lg text-[#291D89] w-[80%] ml-2"
                                     onChangeText={(text) => {
                                         setUserDetails({
                                             ...userDetails,
@@ -265,7 +265,7 @@ const Register = () => {
                     </View>
                     {/* Mobile Number Field */}
                     <View>
-                        <Text className="font-medium text-[#291D89] text-xl my-2">
+                        <Text className="font-[Nunito-SemiBold] text-[#291D89] text-xl my-2">
                             Phone Number
                         </Text>
                         <View className="border border-[#291d89] rounded-xl flex flex-row justify-around items-center h-14 w-[100%]">
@@ -275,7 +275,7 @@ const Register = () => {
                                 numberOfLines={1}
                                 maxLength={10}
                                 value={userDetails.mobile}
-                                className="font-normal text-lg text-[#291D89] basis-[90%] ml-2"
+                                className="font-[Nunito-Regular] text-lg text-[#291D89] basis-[90%] ml-2"
                                 onChangeText={(text) => {
                                     setUserDetails({
                                         ...userDetails,
@@ -293,7 +293,7 @@ const Register = () => {
                     </View>
                     {/* Email Field */}
                     <View>
-                        <Text className="font-medium text-[#291D89] text-xl my-2">
+                        <Text className="font-[Nunito-SemiBold] text-[#291D89] text-xl my-2">
                             Email
                         </Text>
                         <View className="border border-[#291d89] rounded-xl flex flex-row justify-around items-center h-14 w-[100%]">
@@ -302,7 +302,7 @@ const Register = () => {
                                 keyboardType="email-address"
                                 numberOfLines={1}
                                 value={userDetails.email}
-                                className="font-normal text-lg text-[#291D89] w-[90%] ml-2"
+                                className="font-[Nunito-Regular] text-lg text-[#291D89] w-[90%] ml-2"
                                 onChangeText={(text) => {
                                     setUserDetails({
                                         ...userDetails,
@@ -320,7 +320,7 @@ const Register = () => {
                     </View>
                     {/* Qualifications Field */}
                     <View>
-                        <Text className="font-medium text-[#291D89] text-xl my-2">
+                        <Text className="font-[Nunito-SemiBold] text-[#291D89] text-xl my-2">
                             Qualifications
                         </Text>
                         <View className="border border-[#291d89] rounded-xl flex flex-row justify-around items-center h-14 w-[100%]">
@@ -328,7 +328,7 @@ const Register = () => {
                                 placeholder="Enter your Qualifications"
                                 numberOfLines={1}
                                 value={userDetails.qualifications}
-                                className="font-normal text-lg text-[#291D89] w-[90%] ml-2"
+                                className="font-[Nunito-Regular] text-lg text-[#291D89] w-[90%] ml-2"
                                 onChangeText={(text) => {
                                     setUserDetails({
                                         ...userDetails,
@@ -346,7 +346,7 @@ const Register = () => {
                     </View>
                     {/* Aadhar Card Upload */}
                     <View className="flex items-center justify-center">
-                        <Text className="font-medium text-[#291D89] text-xl my-2 w-full">
+                        <Text className="font-[Nunito-SemiBold] text-[#291D89] text-xl my-2 w-full">
                             Aadhar Card Details
                         </Text>
                         {aadharImage ? (
@@ -361,7 +361,7 @@ const Register = () => {
                                 className="bg-[#291d89] rounded-xl flex flex-row justify-center items-center h-14 w-[70%] px-10"
                                 onPress={pickAadharImageAsync}
                             >
-                                <Text className="text-[#f0f4ff] font-bold">
+                                <Text className="text-[#f0f4ff] font-[Nunito-Bold]">
                                     Pan Card Upload
                                 </Text>
                                 <Entypo
@@ -375,7 +375,7 @@ const Register = () => {
                     </View>
                     {/* Pan Card Upload */}
                     <View className="flex items-center justify-center">
-                        <Text className="font-medium text-[#291D89] text-xl my-2 w-full">
+                        <Text className="font-[Nunito-SemiBold] text-[#291D89] text-xl my-2 w-full">
                             Pan Card Details
                         </Text>
                         {panImage ? (
@@ -390,7 +390,7 @@ const Register = () => {
                                 className="bg-[#291d89] rounded-xl flex flex-row justify-center items-center h-14 w-[70%] px-10"
                                 onPress={pickPanImageAsync}
                             >
-                                <Text className="text-[#f0f4ff] font-bold">
+                                <Text className="text-[#f0f4ff] font-[Nunito-Bold]">
                                     Pan Card Upload
                                 </Text>
                                 <Entypo
@@ -415,7 +415,7 @@ const Register = () => {
                         onPress={handleSubmit}
                         disabled={!check}
                     >
-                        <Text className="text-center text-[#f0f4ff] text-xl font-bold">
+                        <Text className="text-center text-[#f0f4ff] text-xl font-[Nunito-Bold]">
                             Apply Now
                         </Text>
                     </TouchableOpacity>

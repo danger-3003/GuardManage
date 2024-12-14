@@ -61,10 +61,10 @@ const Login = () => {
             ></View>
             <View className="h-screen flex-1 justify-between">
                 <View className="my-10 flex flex-col items-end justify-center">
-                    <Text className="text-[#f0f4ff] font-extrabold text-4xl">
+                    <Text className="text-[#f0f4ff] font-[Nunito-Bold] text-4xl">
                         Welcome Back
                     </Text>
-                    <Text className="text-[#f0f4ff] font-light text-xl">
+                    <Text className="text-[#f0f4ff] font-[Nunito-Regular] text-xl">
                         Please Login to continue
                     </Text>
                 </View>
@@ -73,19 +73,19 @@ const Login = () => {
                     style={{ zIndex: 1}}
                 >
                     <View>
-                        <Text className="text-[#291D89] text-center font-extrabold text-3xl py-7">
+                        <Text className="text-[#291D89] text-center font-[Nunito-Bold] text-3xl py-7">
                             User Details
                         </Text>
                     </View>
                     <View>
-                        <Text className="font-medium text-[#291D89] text-xl my-2">
+                        <Text className="font-[Nunito-SemiBold] text-[#291D89] text-xl my-2">
                             Username
                         </Text>
                         <View className="border border-[#291d89] rounded-xl h-14 flex flex-row justify-around items-center w-[100%]">
                             <TextInput
                                 placeholder="Enter Username"
                                 numberOfLines={1}
-                                className="font-normal text-lg text-[#291D89] basis-[90%] ml-2"
+                                className="font-[Nunito-Regular] text-lg text-[#291D89] basis-[90%] ml-2"
                                 onChangeText={(text)=>{setUserDetails({...userDetails,name:text})}}
                             />
                             <FontAwesome5
@@ -97,7 +97,7 @@ const Login = () => {
                         </View>
                     </View>
                     <View>
-                        <Text className="font-medium text-[#291D89] text-xl my-2">
+                        <Text className="font-[Nunito-SemiBold] text-[#291D89] text-xl my-2">
                             Password
                         </Text>
                         <View className="border border-[#291d89] rounded-xl h-14 flex flex-row justify-around items-center w-[100%]">
@@ -105,22 +105,24 @@ const Login = () => {
                                 placeholder="Enter your Password"
                                 numberOfLines={1}
                                 secureTextEntry={!showPass}
-                                className="font-normal text-lg text-[#291D89] basis-[90%] ml-2"
+                                className="font-[Nunito-Regular] text-lg text-[#291D89] basis-[90%] ml-2"
                                 onChangeText={(text)=>{setUserDetails({...userDetails,password:text})}}
                             />
                             <Pressable className="basis-[10%] -ml-5" onPress={handleShowPassword}>
                                 <Ionicons name={showPass?"eye-off-outline":"eye-outline"} size={18} color="#291D89"/>
                             </Pressable>
                         </View>
-                        <Text className="text-right text-[#4E67EB]" style={{marginTop:5}} onPress={()=>{setModalForgetPass(true);}}>Forgot Password ?</Text>
+                    </View>
+                    <View className="flex items-end justify-center">
+                        <Text className="font-[Nunito-Regular] text-[#4E67EB]" style={{marginTop:5}} onPress={()=>{setModalForgetPass(true);}}>Forgot Password ?</Text>
                     </View>
                     <TouchableOpacity className="rounded-xl mt-32 py-3 bg-[#4E67EB] shadow-md shadow-blue-400" onPress={handleLogin}>
-                        <Text className="text-center text-[#f0f4ff] text-xl font-bold">
+                        <Text className="text-center text-[#f0f4ff] text-xl font-[Nunito-Bold]">
                             Log In
                         </Text>
                     </TouchableOpacity>
                     <View className="my-3">
-                        <Text className="text-center">Didn't have an Account? <Text className="text-[#4E67EB]" onPress={()=>{router.navigate("/Authentication/Register")}}>Register here</Text></Text>
+                        <Text className="text-center font-[Nunito-Regular]">Didn't have an Account? <Text className="text-[#4E67EB]" onPress={()=>{router.navigate("/Authentication/Register")}}>Register here</Text></Text>
                     </View>
                 </View>
                 <AlertModal isVisible={modalForgetPass} handleModal={handleForgotPassModal} content="To reset your password, you will be directed to our website." header="Alert" button="Okay"/>

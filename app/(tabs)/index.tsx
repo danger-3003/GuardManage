@@ -12,12 +12,15 @@ import {
     TouchableOpacity,
     FlatList,
     ActivityIndicator,
+    RefreshControl,
+    StatusBar,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Entypo from "@expo/vector-icons/Entypo";
 import Feather from "@expo/vector-icons/Feather";
 import * as Location from "expo-location";
+import * as Network from "expo-network";
 import AlertModal from "../../Components/AlertModal";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
@@ -26,7 +29,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const index = () => {
     const date = new Date();
     const shiftDetails = "A"; //demo shift - replace with database data
-    const daysArray = ["T", "W", "Th", "F", "S","Su", "M"];
+    const daysArray = ["T", "W", "Th", "F", "S", "Su", "M"];
     const weekDays = []; //demo weekdays array - replace with database data
     const datesArray = []; //demo dates array - replace with database data
     let attendanceDate = []; //demo attandence dates array - replace with database data
@@ -63,19 +66,25 @@ const index = () => {
     };
 
     //location and GPS Section
-    const shiftAddress ="Botcha Square, Birla Junction, Visakhapatnam, Andhra Pradesh 530040"; //shift address
+    const shiftAddress =
+        "Botcha Square, Birla Junction, Visakhapatnam, Andhra Pradesh 530040"; //shift address
 
     const [location, setLocation] = useState(""); //get live location
     const [shiftLocation, setShiftLocation] = useState(); //get current shift location
     const [inLocation, setInLocation] = useState(false); //check whether user is in current location or not
     const [user, setUser] = useState("");
+    const [activity, setActivity] = useState(false);
+    const [isConnected, setIsConnected] = useState(null);
+    const [lModal, setLModal] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
+    const [netModal, setNetModal] = useState(false);
 
     const getUserData = async () => {
         const userName = await AsyncStorage.getItem("userName");
         setUser(userName);
     };
 
-    const getShiftLocation=async()=>{
+    const getShiftLocation = async () => {
         const { foreGround }: any =
             await Location.requestForegroundPermissionsAsync();
         const { backGround }: any =
@@ -84,15 +93,14 @@ const index = () => {
             alert("Please Grant Permission");
         }
         Location.geocodeAsync(shiftAddress)
-        .then((data) => {
-            setShiftLocation(data[0]);
-            console.log("work location : ", data);
-        })
-        .catch((err) => {
-            alert("Try Again");
-        });
-
-    }
+            .then((data) => {
+                setShiftLocation(data[0]);
+                // console.log("work location : ", data);
+            })
+            .catch((err) => {
+                alert("Try Again");
+            });
+    };
 
     useEffect(() => {
         getShiftLocation();
@@ -102,7 +110,6 @@ const index = () => {
     let liveLocation: any = "";
 
     const truncateNumber = (number: number) => {
-        console.log(number, (Math.trunc(number * 1000) / 1000).toFixed(3));
         return Math.trunc(number * 1000) / 1000;
     };
 
@@ -114,23 +121,42 @@ const index = () => {
         if (foreGround === "granted" && backGround === "granted") {
             alert("Please Grant Permission");
         }
-        liveLocation = await Location.getCurrentPositionAsync();
-        setLocation(liveLocation);
-        console.log("current location : ", liveLocation);
-        setModal(true);
-        if (
-            Math.abs(
-                truncateNumber(liveLocation.coords.latitude) -
-                    truncateNumber(shiftLocation.latitude)
-            ) <= 0.0015 &&
-            Math.abs(
-                truncateNumber(liveLocation.coords.longitude) -
-                    truncateNumber(shiftLocation.longitude)
-            ) <= 0.0015
-        ) {
-            setInLocation(true);
-        } else {
-            setInLocation(false);
+        setActivity(true);
+        // Create a timeout promise
+        const timeoutPromise = new Promise((_, reject) =>
+            setTimeout(() => reject(new Error("Request timeout")), 3000)
+        );
+        // Use Promise.race to race the location request against the timeout
+        try {
+            liveLocation = await Promise.race([
+                Location.getCurrentPositionAsync(),
+                timeoutPromise
+            ]);
+            setActivity(false);
+            setLModal(false);
+            setLocation(liveLocation);
+            console.log("current location : ", liveLocation);
+            setModal(true);
+            if (
+                Math.abs(
+                    truncateNumber(liveLocation.coords.latitude) -
+                        truncateNumber(shiftLocation.latitude)
+                ) <= 0.0015 &&
+                Math.abs(
+                    truncateNumber(liveLocation.coords.longitude) -
+                        truncateNumber(shiftLocation.longitude)
+                ) <= 0.0015
+            ) {
+                setInLocation(true);
+            } else {
+                setInLocation(false);
+            }
+        } catch (error) {
+            setActivity(false);
+            if(error)
+            {
+                setLModal(true)
+            }
         }
     };
 
@@ -140,14 +166,14 @@ const index = () => {
                 <View className="bg-[#f0f4ff] shadow-md shadow-slate-500 my-1 px-4 py-3 flex flex-row justify-between items-center rounded-lg">
                     <View className={`w-28 flex items-center justify-center `}>
                         <Text
-                            className={`text-center font-semibold ${item.attendance ? "text-[#291d89]" : "text-red-600"}`}
+                            className={`text-center font-[Nunito-SemiBold] ${item.attendance ? "text-[#291d89]" : "text-red-600"}`}
                         >
                             {attendanceDate[item.id - 1]}
                         </Text>
                     </View>
                     <View className="w-32 flex items-center justify-center">
                         <Text
-                            className="text-center text-[#291d89] font-semibold"
+                            className="text-center text-[#291d89] font-[Nunito-SemiBold]"
                             numberOfLines={2}
                         >
                             {item.location}
@@ -170,7 +196,7 @@ const index = () => {
                     </View>
                     {/* <ActivityIndicator /> */}
                     <View className="w-16 flex items-center justify-center">
-                        <Text className="text-center text-[#291d89] font-semibold">
+                        <Text className="text-center text-[#291d89] font-[Nunito-SemiBold]">
                             {item.hours}
                         </Text>
                     </View>
@@ -179,8 +205,62 @@ const index = () => {
         );
     };
 
+    const checkInternetConnection = async () => {
+        setRefreshing(true);
+        const networkState = await Network.getNetworkStateAsync();
+        setIsConnected(networkState.isConnected);
+        if (networkState) {
+            setRefreshing(false);
+        }
+        if (!networkState.isConnected) {
+            setNetModal(true);
+        } else {
+            setNetModal(false);
+        }
+    };
+
+    useEffect(() => {
+        checkInternetConnection();
+    },[isConnected]);
+
+    const onRefresh = () => {
+        setRefreshing(true);
+        checkInternetConnection();
+    };
+
+    const handleNotConnected = () => {
+        setNetModal(false);
+    };
+
+    const handleLModal = () => {
+        setLModal(false);
+    };
+
     return (
         <View className="flex-1 bg-[#f0f4ff]">
+            {activity && (
+                <View className="flex items-center justify-center bg-[#00000050] w-full h-full absolute z-10">
+                    <ActivityIndicator
+                        size="large"
+                        color="white"
+                        className=""
+                    />
+                </View>
+            )}
+            <AlertModal
+                isVisible={netModal}
+                header="Alert"
+                content="You are not connected to internet."
+                handleModal={handleNotConnected}
+                button="Okay"
+            />
+            <AlertModal
+                isVisible={lModal}
+                header="Alert"
+                content="Enable Location to proceed."
+                handleModal={handleLModal}
+                button="Okay"
+            />
             <AlertModal
                 isVisible={modal}
                 content={
@@ -192,17 +272,24 @@ const index = () => {
                 button="Okay"
                 handleModal={handleModal}
             />
+            <StatusBar barStyle="dark-content" backgroundColor="#fff" />
             <ScrollView
                 className="bg-[#f0f4ff] px-5 w-full mb-24"
                 showsVerticalScrollIndicator={false}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }
             >
                 <View className="flex items-center justify-center flex-col w-full">
                     <View className="my-5 w-full">
-                        <Text className="text-[#291d89] text-4xl">
+                        <Text className="text-[#291d89] font-[Nunito-Regular] text-4xl">
                             Hello,{" "}
-                            <Text className="font-extrabold">{user}</Text>
+                            <Text className="font-[Nunito-Bold]">{user}</Text>
                         </Text>
-                        <Text className="text-[#291d89] text-xl">
+                        <Text className="text-[#291d89] font-[Nunito-Regular] text-xl">
                             Nice to have you back
                         </Text>
                     </View>
@@ -216,10 +303,10 @@ const index = () => {
                                 />
                             </View>
                             <View>
-                                <Text className="text-[#f0f4ff] font-base text-lg w-24">
+                                <Text className="text-[#f0f4ff] font-[Nunito-Regular] text-lg w-24">
                                     Monthly Attendance
                                 </Text>
-                                <Text className="text-[#f0f4ff] font-extrabold text-lg">
+                                <Text className="text-[#f0f4ff] font-[Nunito-Bold] text-lg">
                                     25/30(demo)
                                 </Text>
                             </View>
@@ -234,17 +321,18 @@ const index = () => {
                                 />
                             </View>
                             <View>
-                                <Text className="text-[#f0f4ff] font-base text-lg w-24">
+                                <Text className="text-[#f0f4ff] font-[Nunito-Regular] text-lg w-24">
                                     Monthly Payroll
                                 </Text>
-                                <Text className="text-[#f0f4ff] font-extrabold text-lg">
+                                <Text className="text-[#f0f4ff] font-[Nunito-Bold] text-lg">
                                     25,000/-(demo)
                                 </Text>
                             </View>
                         </View>
                     </View>
+                    {/* Location Details */}
                     <View className="w-full my-5">
-                        <Text className="text-[#6c6c6c] font-semibold text-2xl">
+                        <Text className="text-[#6c6c6c] font-[Nunito-SemiBold] text-2xl">
                             Attendance Management
                         </Text>
                         <TouchableOpacity
@@ -252,7 +340,7 @@ const index = () => {
                             onPress={handleLocation}
                         >
                             <Feather name="camera" size={40} color="#291d89" />
-                            <Text className="text-[#291d89] font-semibold">
+                            <Text className="text-[#291d89] font-[Nunito-SemiBold]">
                                 Add Here
                             </Text>
                         </TouchableOpacity>
@@ -268,7 +356,7 @@ const index = () => {
                                     color={inLocation ? "#16a34a" : "#dc2626"}
                                 />
                                 <Text
-                                    className={`text-right mr-2 ${inLocation ? "font-semibold text-green-600" : "font-semibold text-red-600"}`}
+                                    className={`text-right mr-2 ${inLocation ? "font-[Nunito-SemiBold] text-green-600" : "font-[Nunito-SemiBold] text-red-600"}`}
                                 >
                                     {inLocation
                                         ? "Location Confirmed"
@@ -277,8 +365,9 @@ const index = () => {
                             </View>
                         )}
                     </View>
+                    {/* Shift Details */}
                     <View className="w-full mb-5">
-                        <Text className="text-[#6c6c6c] font-semibold text-2xl">
+                        <Text className="text-[#6c6c6c] font-[Nunito-SemiBold] text-2xl">
                             Shift Details
                         </Text>
                         <View className="w-full flex items-center flex-row mt-4">
@@ -290,12 +379,12 @@ const index = () => {
                                 />
                             </View>
                             <View className="basis-[80%]">
-                                <Text className="font-extrabold text-xl mb-1">
+                                <Text className="font-[Nunito-Bold] text-xl mb-1">
                                     Current Shift
                                 </Text>
                                 <Text className="text-xl text-red-500 mr-5">
                                     {date.toLocaleDateString()}
-                                    <Text className="font-extrabold">
+                                    <Text className="font-[Nunito-Bold]">
                                         {", " + shiftDetails}
                                     </Text>{" "}
                                     {", " + shiftAddress}
@@ -303,12 +392,16 @@ const index = () => {
                             </View>
                         </View>
                     </View>
+                    {/* Weekly Record */}
                     <View className="w-full my-5">
-                        <Text className="text-[#6c6c6c] font-semibold text-2xl">
+                        <Text className="text-[#6c6c6c] font-[Nunito-SemiBold] text-2xl">
                             {date.toUTCString()}
                         </Text>
                         <View className="flex items-center justify-center">
-                            <ScrollView horizontal={true} className="flex flex-row mt-4">
+                            <ScrollView
+                                horizontal={true}
+                                className="flex flex-row mt-4"
+                            >
                                 {datesArray.map((item, key) => {
                                     return (
                                         <View
@@ -316,7 +409,7 @@ const index = () => {
                                             className="relative flex items-center justify-center flex-col bg-[#4e67eb] mx-2 p-2 py-2.5 w-11 rounded-md shadow-md shadow-slate-900"
                                         >
                                             <Text
-                                                className={`font-semibold text-[#f0f4ff] mb-2`}
+                                                className={`font-[Nunito-SemiBold] text-[#f0f4ff] mb-2`}
                                             >
                                                 {item}
                                             </Text>
@@ -326,11 +419,11 @@ const index = () => {
                                             <Text
                                                 className={`${
                                                     date.getDate() === item
-                                                        ? "text-[#4e67eb] font-extrabold"
-                                                        : "text-[#f0f4ff] font-semibold"
+                                                        ? "text-[#4e67eb] font-[Nunito-Bold]"
+                                                        : "text-[#f0f4ff] font-[Nunito-SemiBold]"
                                                 } my-1 relative`}
                                             >
-                                                {(daysArray[key])}
+                                                {daysArray[key]}
                                             </Text>
                                         </View>
                                     );
@@ -338,30 +431,31 @@ const index = () => {
                             </ScrollView>
                         </View>
                     </View>
+                    {/* Attendance Record */}
                     <View className="w-full mb-5">
-                        <Text className="text-[#6c6c6c] font-semibold text-2xl">
+                        <Text className="text-[#6c6c6c] font-[Nunito-SemiBold] text-2xl">
                             Attendance Record
                         </Text>
                         <ScrollView className="mt-4" horizontal={true}>
                             <View className="px-5 -mx-5 ">
                                 <View className="bg-[#4E67EB] mx-2 px-4 py-3 flex flex-row justify-between items-center shadow-md shadow-slate-500 rounded-lg">
                                     <View className="w-28  flex items-center justify-center">
-                                        <Text className="text-center text-[#f0f4ff] font-bold text-lg">
+                                        <Text className="text-center text-[#f0f4ff] font-[Nunito-Bold] text-lg">
                                             Date
                                         </Text>
                                     </View>
                                     <View className="w-32 flex items-center justify-center">
-                                        <Text className="text-center text-[#f0f4ff] font-bold text-lg">
+                                        <Text className="text-center text-[#f0f4ff] font-[Nunito-Bold] text-lg">
                                             Location
                                         </Text>
                                     </View>
                                     <View className="w-32  flex items-center justify-center">
-                                        <Text className="text-center text-[#f0f4ff] font-bold text-lg">
+                                        <Text className="text-center text-[#f0f4ff] font-[Nunito-Bold] text-lg">
                                             Attendance
                                         </Text>
                                     </View>
                                     <View className="w-16  flex items-center justify-center">
-                                        <Text className="text-center text-[#f0f4ff] font-bold text-lg">
+                                        <Text className="text-center text-[#f0f4ff] font-[Nunito-Bold] text-lg">
                                             Hours
                                         </Text>
                                     </View>

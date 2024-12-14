@@ -67,7 +67,7 @@ const Profile = () => {
                         <View>
                             <View className="-mt-2 flex flex-row items-end pb-1 justify-between border-b-2 border-[#4E67EB] h-14">
                                 <Text className="text-xl font-semibold">Name</Text>
-                                <Text >{userName}</Text>
+                                {/* <Text >{userName}</Text> */}
                                 <TextInput value={userName} className="text-xl font-normal text-[#6c6c6c]" readOnly={true}/>
                             </View>
                             <View className="flex flex-row items-end pb-1 justify-between border-b-2 border-[#4E67EB] h-14">

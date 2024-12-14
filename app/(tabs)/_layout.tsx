@@ -99,7 +99,7 @@ function MyTabBar({ state, descriptors, navigation }) {
                         </View>
                         <Text
                             className={`${
-                                isFocused ? "font-bold text-xl" : "text-base"
+                                isFocused ? "font-[Nunito-Bold] text-xl" : "text-base font-[Nunito-Regular]"
                             }`}
                             style={{
                                 color: isFocused
@@ -122,15 +122,20 @@ const tabLayout = () => {
             <Tabs tabBar={(props) => <MyTabBar {...props} />}>
                 <Tabs.Screen 
                     name="index" 
-                    options={{ headerTitle:()=><Text className={`font-extrabold text-2xl text-[${colors.primary}]`}>Home</Text>,headerTitleAlign:'center'}}
+                    options={
+                        { 
+                            headerTitle:()=><Text className={`font-[Nunito-Bold] text-2xl text-[${colors.primary}]`}>Home</Text>,
+                            headerTitleAlign:'center',
+                            tabBarLabel:"Home"
+                        }}
                 />
                 <Tabs.Screen
                     name="Payroll"
-                    options={{ headerTitle:()=><Text className={`font-extrabold text-2xl text-[${colors.primary}]`}>Payroll</Text>,headerTitleAlign:'center'}}
+                    options={{ headerTitle:()=><Text className={`font-[Nunito-Bold] text-2xl text-[${colors.primary}]`}>Payroll</Text>,headerTitleAlign:'center'}}
                 />
                 <Tabs.Screen
                     name="Profile"
-                    options={{ headerTitle:()=><Text className={`font-extrabold text-2xl text-[${colors.primary}]`}>Profile</Text>,headerTitleAlign:'center'}}
+                    options={{ headerTitle:()=><Text className={`font-[Nunito-Bold] text-2xl text-[${colors.primary}]`}>Profile</Text>,headerTitleAlign:'center'}}
                 />
             </Tabs>
         </>
