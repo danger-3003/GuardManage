@@ -3,7 +3,7 @@
     "name": "GuardManage",
     "slug": "expoStack",
     "version": "1.0.0",
-    "scheme": "expoStack",
+    "scheme": "guardmanage",
     "web": {
       "bundler": "metro",
       "output": "static",

@@ -2,7 +2,7 @@
 /* eslint-disable import/order */
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable prettier/prettier */
-import { View, Text, Pressable, TouchableOpacity, BackHandler, StatusBar } from "react-native";
+import { View, Text, Pressable, TouchableOpacity } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useEffect } from "react";
 import { LinearGradient } from "expo-linear-gradient";
@@ -10,14 +10,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 
 const Layout = () => {
-    useEffect(()=>{
-        const backAction=()=>{
-            return true;
-        }
-
-        const backHandler = BackHandler.addEventListener("hardwareBackPress",backAction);
-        return()=>backHandler.remove();
-    },[]);
 
     const getLogin=async()=>{
         try{

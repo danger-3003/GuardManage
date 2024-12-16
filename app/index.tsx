@@ -93,7 +93,7 @@ const GettingStarted = () => {
                                     </Text>
                                 </View>
                                 <TouchableOpacity
-                                    className="bg-[#F0F4FF] rounded-[12] px-5 py-3 mb-20 flex items-center justify-center flex-row shadow-lg"
+                                    className="bg-[#F0F4FF] rounded-[12] w-80 px-5 py-3 mb-20 flex items-center justify-center flex-row shadow-lg"
                                     onPress={() => {
                                         router.navigate("/Authentication/Layout");
                                         setFirst();
