@@ -2,7 +2,7 @@
 /* eslint-disable import/order */
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable prettier/prettier */
-import { View, Text, Pressable, TouchableOpacity, BackHandler } from "react-native";
+import { View, Text, Pressable, TouchableOpacity, BackHandler, StatusBar } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useEffect } from "react";
 import { LinearGradient } from "expo-linear-gradient";
@@ -39,6 +39,7 @@ const Layout = () => {
             start={{x:0,y:0}}
             end={{x:1,y:1}}
         >
+            <StatusBar barStyle="light-content" backgroundColor="#08004A"/>
             <View className="mx-5 mt-6">
                 {/* <View className="relative" style={{zIndex:10}}>
                     <Pressable onPress={() => {router.back()}} className="">
@@ -57,11 +58,11 @@ const Layout = () => {
                         </View>
                     </View>
                     <View className="mt-20">
-                        <TouchableOpacity className="bg-[#F0F4FF] rounded-xl my-2 w-[150] py-3 px-5 flex flex-row items-center justify-between shadow-lg" onPress={()=>{router.navigate("/Authentication/Register")}}>
+                        <TouchableOpacity className="bg-[#F0F4FF] rounded-xl my-2 w-44 py-3 px-5 flex flex-row items-center justify-between shadow-lg" onPress={()=>{router.navigate("/Authentication/Register")}}>
                             <Text className="text-[#291D89] font-[Nunito-Bold] text-xl text-center">Register</Text>
                             <Ionicons name="caret-back" size={15} color="#291D89" className="rotate-180"/>
                         </TouchableOpacity> 
-                        <TouchableOpacity className="border-2 border-[#F0F4FF] bg-[#586ac5] rounded-xl my-2 w-[150] py-3 px-5 flex flex-row items-center justify-between shadow-lg" onPress={getLogin}>
+                        <TouchableOpacity className="border-2 border-[#F0F4FF] bg-[#586ac5] rounded-xl my-2 w-44 py-3 px-5 flex flex-row items-center justify-between shadow-lg" onPress={getLogin}>
                             <Text className="text-[#F0F4FF] font-[Nunito-Bold] text-xl text-center">Login</Text>
                             <Ionicons name="caret-back" size={15} color="#F0F4FF" className="rotate-180"/>
                         </TouchableOpacity>

@@ -77,7 +77,8 @@ const index = () => {
     const [isConnected, setIsConnected] = useState(null);
     const [lModal, setLModal] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
-    const [netModal, setNetModal] = useState(false);
+    const [netModal, setNetModal] = useState(false);    
+    const [curr,setCurr] = useState(date.getDate());
 
     const getUserData = async () => {
         const userName = await AsyncStorage.getItem("userName");
@@ -290,38 +291,38 @@ const index = () => {
                             Nice to have you back
                         </Text>
                     </View>
-                    <View className="bg-[#291d89] flex items-center justify-center flex-row px-5 py-3 my-5 rounded-xl shadow-xl shadow-slate-900">
-                        <View className="flex flex-row items-center justify-center h-24">
-                            <View className="bg-[#4e67eb] h-10 w-10 flex items-center justify-center rounded-full shadow-md mr-2">
+                    <View className="bg-[#291d89] w-full flex items-center justify-center flex-row px-5 py-3 my-5 rounded-xl shadow-xl shadow-slate-900">
+                        <View className="flex flex-col items-center justify-center w-full basis-[50%]">
+                            <View className="bg-[#4e67eb] h-16 w-16 flex items-center justify-center rounded-full shadow-30">
                                 <Entypo
                                     name="check"
-                                    size={20}
+                                    size={30}
                                     color="#f0f4ff"
                                 />
                             </View>
                             <View>
-                                <Text className="text-[#f0f4ff] font-[Nunito-Regular] text-lg w-24">
+                                <Text className="text-[#f0f4ff] font-[Nunito-Regular] text-lg text-center">
                                     Monthly Attendance
                                 </Text>
-                                <Text className="text-[#f0f4ff] font-[Nunito-Bold] text-lg">
+                                <Text className="text-[#f0f4ff] font-[Nunito-Bold] text-lg text-center">
                                     25/30(demo)
                                 </Text>
                             </View>
                         </View>
                         <View className="h-full w-0.5 mx-2 bg-[#4e67eb]"></View>
-                        <View className="flex flex-row items-center justify-center h-24">
-                            <View className="bg-[#4e67eb] h-10 w-10 flex items-center justify-center rounded-full shadow-md mr-2">
+                        <View className="flex flex-col items-center justify-start w-full basis-[50%]">
+                            <View className="bg-[#4e67eb] h-16 w-16 flex items-center justify-center rounded-full shadow-30">
                                 <FontAwesome
                                     name="rupee"
-                                    size={20}
+                                    size={30}
                                     color="#f0f4ff"
                                 />
                             </View>
                             <View>
-                                <Text className="text-[#f0f4ff] font-[Nunito-Regular] text-lg w-24">
+                                <Text className="text-[#f0f4ff] font-[Nunito-Regular] text-lg text-center">
                                     Monthly Payroll
                                 </Text>
-                                <Text className="text-[#f0f4ff] font-[Nunito-Bold] text-lg">
+                                <Text className="text-[#f0f4ff] font-[Nunito-Bold] text-lg text-center">
                                     25,000/-(demo)
                                 </Text>
                             </View>
@@ -377,9 +378,9 @@ const index = () => {
                             </View>
                             <View className="basis-[80%]">
                                 <Text className="font-[Nunito-Bold] text-xl mb-1">
-                                    Current Shift
+                                    Current Shift: 5hrs
                                 </Text>
-                                <Text className="text-xl text-red-500 mr-5 font-[Nunito-Regular]">
+                                <Text className="text-xl text-red mr-5 font-[Nunito-Regular]">
                                     {date.toLocaleDateString()}
                                     <Text className="font-[Nunito-Bold]">
                                         {", " + shiftDetails}
@@ -390,39 +391,39 @@ const index = () => {
                         </View>
                     </View>
                     {/* Weekly Record */}
-                    <View className="w-full my-5">
+                    <View className="w-full mb-5">
                         <Text className="text-[#6c6c6c] font-[Nunito-SemiBold] text-2xl">
                             {date.toUTCString()}
                         </Text>
                         <View className="flex items-center justify-center">
                             <ScrollView
                                 horizontal={true}
-                                className="flex flex-row mt-4"
+                                className="flex flex-row mt-2"
                             >
                                 {datesArray.map((item, key) => {
                                     return (
-                                        <View
+                                        <TouchableOpacity
                                             key={key}
                                             className="relative flex items-center justify-center flex-col bg-[#4e67eb] mx-2 my-2 p-2 py-2.5 w-11 rounded-md shadow shadow-slate-900"
+                                            onPress={()=>{setCurr(item)}}
                                         >
                                             <Text
                                                 className={`font-[Nunito-SemiBold] text-[#f0f4ff] mb-2`}
                                             >
                                                 {item}
                                             </Text>
-                                            {date.getDate() === item ? (
-                                                <View className="h-7 w-7 bg-[#f0f4ff] rounded-full absolute bottom-2.5"></View>
-                                            ) : null}
-                                            <Text
-                                                className={`${
-                                                    date.getDate() === item
-                                                        ? "text-[#4e67eb] font-[Nunito-Bold]"
-                                                        : "text-[#f0f4ff] font-[Nunito-SemiBold]"
-                                                } my-1 relative`}
-                                            >
-                                                {daysArray[key]}
-                                            </Text>
-                                        </View>
+                                            
+                                            {
+                                                (curr===item)?
+                                                <View className="h-7 w-7 bg-[#f0f4ff] rounded-full flex items-center justify-center">
+                                                    <Text className="text-center text-secondary font-[Nunito-Bold]">{daysArray[key]}</Text>
+                                                </View>
+                                                :
+                                                <View className="h-7 w-7 flex items-center justify-center">
+                                                    <Text className="text-center text-background font-[Nunito-SemiBold]">{daysArray[key]}</Text>
+                                                </View>
+                                            }
+                                        </TouchableOpacity>
                                     );
                                 })}
                             </ScrollView>
