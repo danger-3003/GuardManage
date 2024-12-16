@@ -8,12 +8,13 @@ import {
     Pressable,
     ScrollView,
     TouchableOpacity,
+    StatusBar
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import AlertModal from "../../Components/AlertModal";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
-import { useState } from "react";
+import React, { useState } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from "expo-router";
 

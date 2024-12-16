@@ -9,6 +9,7 @@ import {
     ScrollView,
     TouchableOpacity,
     Image,
+    StatusBar
 } from "react-native";
 import AlertModal from "../../Components/AlertModal";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -16,7 +17,7 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import Fontisto from '@expo/vector-icons/Fontisto';
 import Entypo from "@expo/vector-icons/Entypo";
 import { LinearGradient } from "expo-linear-gradient";
-import { useState } from "react";
+import React, { useState } from "react";
 import { router } from "expo-router";
 import * as ImagePicker from "expo-image-picker";
 
