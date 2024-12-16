@@ -2,13 +2,23 @@
 /* eslint-disable import/order */
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable prettier/prettier */
-import { View, Text, Pressable, TouchableOpacity } from "react-native";
+import { View, Text, Pressable, TouchableOpacity, BackHandler } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useEffect } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 
 const Layout = () => {
+    useEffect(()=>{
+        const backAction=()=>{
+            return true;
+        }
+
+        const backHandler = BackHandler.addEventListener("hardwareBackPress",backAction);
+        return()=>backHandler.remove();
+    },[]);
+
     const getLogin=async()=>{
         try{
             const loginStatus=await AsyncStorage.getItem('isLogin');
@@ -30,11 +40,11 @@ const Layout = () => {
             end={{x:1,y:1}}
         >
             <View className="mx-5 mt-6">
-                <View className="relative" style={{zIndex:10}}>
+                {/* <View className="relative" style={{zIndex:10}}>
                     <Pressable onPress={() => {router.back()}} className="">
                         <Ionicons name="arrow-back-outline" size={25} color="#F0F4FF" />
                     </Pressable>
-                </View>
+                </View> */}
                 <View className="flex items-center justify-center h-[90vh] relative">
                     <View className="absolute bg-[#7687df] h-40 w-40 rounded-full blur-3xl backdrop-blur-3xl" style={{left:-70,top:-100,zIndex:0}}></View>
                     <View className="absolute bg-[#7687df] h-20 w-20 rounded-full blur-3xl backdrop-blur-3xl" style={{right:-40,bottom:100,zIndex:0}}></View>

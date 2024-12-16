@@ -40,7 +40,7 @@ const Login = () => {
             if(userDetails.name && userDetails.password){
                 await AsyncStorage.setItem('isLogin',"true");
                 await AsyncStorage.setItem('userName',userDetails.name);
-                router.replace("/(tabs)");
+                router.navigate("/(tabs)");
             }
             else{
                 setIsEmpty(true);

@@ -27,8 +27,8 @@ const Profile = () => {
     const handleLogout = async () => {
         try {
             await AsyncStorage.setItem("isLogin", "false");
+            await AsyncStorage.setItem("first", "false");
             await AsyncStorage.setItem("userName", "");
-            const status = await AsyncStorage.getItem("isLogin");
             router.replace("/Authentication/Layout");
         } catch (err) {
             alert(err);

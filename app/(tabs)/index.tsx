@@ -116,9 +116,7 @@ const index = () => {
     const handleLocation = async () => {
         const { foreGround }: any =
             await Location.requestForegroundPermissionsAsync();
-        const { backGround }: any =
-            await Location.requestForegroundPermissionsAsync();
-        if (foreGround === "granted" && backGround === "granted") {
+        if (foreGround === "granted") {
             alert("Please Grant Permission");
         }
         setActivity(true);
@@ -135,7 +133,7 @@ const index = () => {
             setActivity(false);
             setLModal(false);
             setLocation(liveLocation);
-            console.log("current location : ", liveLocation);
+            // console.log("current location : ", liveLocation);
             setModal(true);
             if (
                 Math.abs(

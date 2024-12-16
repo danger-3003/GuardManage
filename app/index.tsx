@@ -6,10 +6,11 @@ import { View, Text, Image, TouchableOpacity,ScrollView, RefreshControl,StatusBa
 import { useFonts } from 'expo-font';
 import Ionicons from "@expo/vector-icons/Ionicons";
 import IntroImage from "../assets/images/IntroImage.png";
-import { router } from "expo-router";
+import { router, useNavigation } from "expo-router";
 import * as Network from "expo-network";
-import { useEffect, useState } from "react";
+import React,{ useEffect, useState } from "react";
 import AlertModal from "~/Components/AlertModal";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const GettingStarted = () => {
     const [isConnected, setIsConnected] = useState(null);
@@ -21,6 +22,17 @@ const GettingStarted = () => {
         'Nunito-SemiBold': require('../assets/fonts/Nunito-SemiBold.ttf'),
         'Nunito-Regular': require('../assets/fonts/Nunito-Regular.ttf'),
       });
+
+    const handleFirst= async()=>{
+        try{
+            const value = await AsyncStorage.getItem('first');
+            console.log(value);
+            if(value === 'true'){
+                router.replace("/Authentication/Layout");
+            }
+        }
+        catch(err){alert(err)}
+    }
 
     const checkInternetConnection = async () => {
         setRefreshing(true);
@@ -34,6 +46,7 @@ const GettingStarted = () => {
 
     useEffect(() => {
         checkInternetConnection();
+        handleFirst();
     }, []);
 
     const onRefresh = () => {
@@ -50,8 +63,6 @@ const GettingStarted = () => {
             <StatusBar barStyle="light-content" backgroundColor="#08004A"/>
             {
                 fontsLoaded &&
-
-                // <AppLoading />
                 <View className="flex-1 h-screen bg-[#291D89]">
                     <ScrollView className="flex h-[80%] bg-[#291D89]"
                         refreshControl={
@@ -79,10 +90,11 @@ const GettingStarted = () => {
                                     className="bg-[#F0F4FF] rounded-[12] px-5 py-3 mb-20 flex items-center justify-center flex-row shadow-lg"
                                     onPress={() => {
                                         router.navigate("/Authentication/Layout");
+                                        AsyncStorage.setItem('first',"true");
                                     }}
                                     disabled={!isConnected}
                                 >
-                                    <Text className={`${isConnected?"text-[#291D89]":"text-[#c0b8fd]"} text-2xl font-[Nunito-SemiBold] uppercase`}>
+                                    <Text className={`${isConnected?"text-[#291D89]":"text-[#c0b8fd]"} text-xl font-[Nunito-SemiBold] uppercase`}>
                                         Getting Started
                                     </Text>
                                     <Ionicons
