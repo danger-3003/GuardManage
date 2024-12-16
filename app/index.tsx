@@ -11,11 +11,13 @@ import * as Network from "expo-network";
 import React,{ useEffect, useState } from "react";
 import AlertModal from "~/Components/AlertModal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Layout from "./Authentication/Layout";
 
 const GettingStarted = () => {
     const [isConnected, setIsConnected] = useState(null);
     const [refreshing, setRefreshing] = useState(false);
     const [netModal,setNetModal] = useState(false);
+    const [value, setValue] = useState("");
 
     const [fontsLoaded] = useFonts({
         'Nunito-Bold': require('../assets/fonts/Nunito-Bold.ttf'),
@@ -27,11 +29,15 @@ const GettingStarted = () => {
         try{
             const value = await AsyncStorage.getItem('first');
             console.log(value);
-            if(value === 'true'){
-                router.replace("/Authentication/Layout");
-            }
+            // if(value === 'true'){
+            //     router.replace("/Authentication/Layout");
+            // }
+            setValue(value);
         }
         catch(err){alert(err)}
+    }
+    const setFirst=async()=>{
+        await AsyncStorage.setItem('first',"true");
     }
 
     const checkInternetConnection = async () => {
@@ -62,7 +68,7 @@ const GettingStarted = () => {
         <>
             <StatusBar barStyle="light-content" backgroundColor="#08004A"/>
             {
-                fontsLoaded &&
+                value==="false" ?
                 <View className="flex-1 h-screen bg-[#291D89]">
                     <ScrollView className="flex h-[80%] bg-[#291D89]"
                         refreshControl={
@@ -90,7 +96,7 @@ const GettingStarted = () => {
                                     className="bg-[#F0F4FF] rounded-[12] px-5 py-3 mb-20 flex items-center justify-center flex-row shadow-lg"
                                     onPress={() => {
                                         router.navigate("/Authentication/Layout");
-                                        AsyncStorage.setItem('first',"true");
+                                        setFirst();
                                     }}
                                     disabled={!isConnected}
                                 >
@@ -112,6 +118,8 @@ const GettingStarted = () => {
                         }
                     </ScrollView>
                 </View>
+                :
+                <Layout />
             }
         </>
     );

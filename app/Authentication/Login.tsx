@@ -41,7 +41,7 @@ const Login = () => {
             if(userDetails.name && userDetails.password){
                 await AsyncStorage.setItem('isLogin',"true");
                 await AsyncStorage.setItem('userName',userDetails.name);
-                router.navigate("/(tabs)");
+                router.replace("/(tabs)");
             }
             else{
                 setIsEmpty(true);
@@ -56,7 +56,6 @@ const Login = () => {
             start={{x:0,y:0}}
             end={{x:1,y:1}}
         >
-            <StatusBar barStyle="light-content" backgroundColor="#08004A"/>
             <View
                 className="absolute bg-[#7687df] h-40 w-40 rounded-full blur-3xl backdrop-blur-3xl"
                 style={{ left: -50, top: 10, zIndex: 1 }}

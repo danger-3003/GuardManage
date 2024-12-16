@@ -31,7 +31,7 @@ const Profile = () => {
         email: "user1@gmail.com",
     });
     const [editProfile, setEditProfile] = useState(false);
-    const [showUser, setShowUser] = useState(false);
+    const [showUser, setShowUser] = useState(true);
     const [showPassword, setShowPassword] = useState(false);
     const [showShift, setShowShift] = useState(true);
     const date = new Date();

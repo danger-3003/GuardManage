@@ -26,7 +26,7 @@ const Layout = () => {
                 router.replace("/(tabs)")
             }
             else{
-                router.replace("/Authentication/Login")
+                router.push("/Authentication/Login")
             }
         }
         catch(err){alert(err)}
@@ -39,7 +39,6 @@ const Layout = () => {
             start={{x:0,y:0}}
             end={{x:1,y:1}}
         >
-            <StatusBar barStyle="light-content" backgroundColor="#08004A"/>
             <View className="mx-5 mt-6">
                 {/* <View className="relative" style={{zIndex:10}}>
                     <Pressable onPress={() => {router.back()}} className="">
@@ -58,7 +57,7 @@ const Layout = () => {
                         </View>
                     </View>
                     <View className="mt-20">
-                        <TouchableOpacity className="bg-[#F0F4FF] rounded-xl my-2 w-44 py-3 px-5 flex flex-row items-center justify-between shadow-lg" onPress={()=>{router.navigate("/Authentication/Register")}}>
+                        <TouchableOpacity className="bg-[#F0F4FF] rounded-xl my-2 w-44 py-3 px-5 flex flex-row items-center justify-between shadow-lg" onPress={()=>{router.push("/Authentication/Register")}}>
                             <Text className="text-[#291D89] font-[Nunito-Bold] text-xl text-center">Register</Text>
                             <Ionicons name="caret-back" size={15} color="#291D89" className="rotate-180"/>
                         </TouchableOpacity> 
