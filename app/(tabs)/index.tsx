@@ -114,8 +114,7 @@ const index = () => {
     };
 
     const handleLocation = async () => {
-        const { foreGround }: any =
-            await Location.requestForegroundPermissionsAsync();
+        const { foreGround }: any = await Location.requestForegroundPermissionsAsync();
         if (foreGround === "granted") {
             alert("Please Grant Permission");
         }
@@ -156,6 +155,37 @@ const index = () => {
                 setLModal(true)
             }
         }
+    };
+
+    const checkInternetConnection = async () => {
+        setRefreshing(true);
+        const networkState = await Network.getNetworkStateAsync();
+        setIsConnected(networkState.isConnected);
+        if (networkState) {
+            setRefreshing(false);
+        }
+        if (!networkState.isConnected) {
+            setNetModal(true);
+        } else {
+            setNetModal(false);
+        }
+    };
+
+    useEffect(() => {
+        checkInternetConnection();
+    },[isConnected]);
+
+    const onRefresh = () => {
+        setRefreshing(true);
+        checkInternetConnection();
+    };
+
+    const handleNotConnected = () => {
+        setNetModal(false);
+    };
+
+    const handleLModal = () => {
+        setLModal(false);
     };
 
     const renderRecords = ({ item }) => {
@@ -201,37 +231,6 @@ const index = () => {
                 </View>
             </View>
         );
-    };
-
-    const checkInternetConnection = async () => {
-        setRefreshing(true);
-        const networkState = await Network.getNetworkStateAsync();
-        setIsConnected(networkState.isConnected);
-        if (networkState) {
-            setRefreshing(false);
-        }
-        if (!networkState.isConnected) {
-            setNetModal(true);
-        } else {
-            setNetModal(false);
-        }
-    };
-
-    useEffect(() => {
-        checkInternetConnection();
-    },[isConnected]);
-
-    const onRefresh = () => {
-        setRefreshing(true);
-        checkInternetConnection();
-    };
-
-    const handleNotConnected = () => {
-        setNetModal(false);
-    };
-
-    const handleLModal = () => {
-        setLModal(false);
     };
 
     return (
@@ -380,7 +379,7 @@ const index = () => {
                                 <Text className="font-[Nunito-Bold] text-xl mb-1">
                                     Current Shift
                                 </Text>
-                                <Text className="text-xl text-red-500 mr-5">
+                                <Text className="text-xl text-red-500 mr-5 font-[Nunito-Regular]">
                                     {date.toLocaleDateString()}
                                     <Text className="font-[Nunito-Bold]">
                                         {", " + shiftDetails}
@@ -404,7 +403,7 @@ const index = () => {
                                     return (
                                         <View
                                             key={key}
-                                            className="relative flex items-center justify-center flex-col bg-[#4e67eb] mx-2 p-2 py-2.5 w-11 rounded-md shadow-md shadow-slate-900"
+                                            className="relative flex items-center justify-center flex-col bg-[#4e67eb] mx-2 my-2 p-2 py-2.5 w-11 rounded-md shadow shadow-slate-900"
                                         >
                                             <Text
                                                 className={`font-[Nunito-SemiBold] text-[#f0f4ff] mb-2`}
