@@ -61,6 +61,7 @@ const Profile = () => {
 
     const handleEditProfile = () => {
         setEditProfile(!editProfile);
+        setShowUser(true);
     };
 
     return (
@@ -142,7 +143,7 @@ const Profile = () => {
                                         {/* <Text >{userName}</Text> */}
                                         <TextInput
                                             value={userName}
-                                            className={`text-xl font-[Nunito-Regular] ${editProfile ? "bg-slate-200 w-44 text-red-600" : "text-[#6c6c6c]"} py-[-1rem]`}
+                                            className={`text-xl font-[Nunito-Regular] ${editProfile ? "bg-slate-200 w-44 text-red" : "text-[#6c6c6c]"} py-[-1rem]`}
                                             readOnly={!editProfile}
                                         />
                                     </View>
@@ -152,7 +153,7 @@ const Profile = () => {
                                         </Text>
                                         <TextInput
                                             value={userDetails.age}
-                                            className={`text-xl font-[Nunito-Regular] ${editProfile ? "bg-slate-200 w-44 text-red-600" : "text-[#6c6c6c]"} py-[-1rem]`}
+                                            className={`text-xl font-[Nunito-Regular] ${editProfile ? "bg-slate-200 w-44 text-red" : "text-[#6c6c6c]"} py-[-1rem]`}
                                             readOnly={!editProfile}
                                         />
                                         {/* <Text className="text-xl font-[Nunito-Regular] text-[#6c6c6c]">{userDetails.age}</Text> */}
@@ -163,7 +164,7 @@ const Profile = () => {
                                         </Text>
                                         <TextInput
                                             value={userDetails.dob}
-                                            className={`text-xl font-[Nunito-Regular] ${editProfile ? "bg-slate-200 w-44 text-red-600" : "text-[#6c6c6c]"} py-[-1rem]`}
+                                            className={`text-xl font-[Nunito-Regular] ${editProfile ? "bg-slate-200 w-44 text-red" : "text-[#6c6c6c]"} py-[-1rem]`}
                                             readOnly={!editProfile}
                                         />
                                         {/* <Text className="text-xl font-[Nunito-Regular] text-[#6c6c6c]">{userDetails.dob}</Text> */}
@@ -174,7 +175,7 @@ const Profile = () => {
                                         </Text>
                                         <TextInput
                                             value={userDetails.mobileNo}
-                                            className={`text-xl font-[Nunito-Regular] ${editProfile ? "bg-slate-200 w-44 text-red-600" : "text-[#6c6c6c]"} py-[-1rem]`}
+                                            className={`text-xl font-[Nunito-Regular] ${editProfile ? "bg-slate-200 w-44 text-red" : "text-[#6c6c6c]"} py-[-1rem]`}
                                             readOnly={!editProfile}
                                         />
                                         {/* <Text className="text-xl font-[Nunito-Regular] text-[#6c6c6c]">{userDetails.mobileNo}</Text> */}
@@ -185,7 +186,7 @@ const Profile = () => {
                                         </Text>
                                         <TextInput
                                             value={userDetails.email}
-                                            className={`text-xl font-[Nunito-Regular] ${editProfile ? "bg-slate-200 w-44 text-red-600" : "text-[#6c6c6c]"} py-[-1rem]`}
+                                            className={`text-xl font-[Nunito-Regular] ${editProfile ? "bg-slate-200 w-44 text-red" : "text-[#6c6c6c]"} py-[-1rem]`}
                                             readOnly={!editProfile}
                                         />
                                         {/* <Text className="text-xl font-[Nunito-Regular] text-[#6c6c6c]">{userDetails.email}</Text> */}

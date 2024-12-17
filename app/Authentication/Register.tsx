@@ -9,12 +9,12 @@ import {
     ScrollView,
     TouchableOpacity,
     Image,
-    StatusBar
+    StatusBar,
 } from "react-native";
-import AlertModal from "../../Components/AlertModal";
+import AlertModal from "../../Components/AlertModal.android";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
-import Fontisto from '@expo/vector-icons/Fontisto';
+import Fontisto from "@expo/vector-icons/Fontisto";
 import Entypo from "@expo/vector-icons/Entypo";
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useState } from "react";
@@ -31,8 +31,8 @@ const Register = () => {
         mobile: "",
         email: "",
         qualifications: "",
-        aadharImage:"",
-        panImage:"",
+        aadharImage: "",
+        panImage: "",
     });
     const handleSubmit = () => {
         if (
@@ -50,8 +50,8 @@ const Register = () => {
                 mobile: "",
                 email: "",
                 qualifications: "",
-                aadharImage:"",
-                panImage:"",
+                aadharImage: "",
+                panImage: "",
             });
             setEmpty(false);
         } else {
@@ -77,7 +77,7 @@ const Register = () => {
             console.log(result.assets[0].uri);
             setPanImage(result.assets[0].uri);
         } else {
-            setImageModal(prev=> !prev);        
+            setImageModal((prev) => !prev);
         }
     };
     const [aadharImage, setAadharImage] = useState(null);
@@ -93,7 +93,7 @@ const Register = () => {
             console.log(result);
             setAadharImage(result.assets[0].uri);
         } else {
-            setImageModal(prev=> !prev);
+            setImageModal((prev) => !prev);
         }
     };
     const [profileImage, setProfileImage] = useState(null);
@@ -109,18 +109,18 @@ const Register = () => {
             console.log(result);
             setProfileImage(result.assets[0].uri);
         } else {
-            setImageModal(prev=> !prev);
+            setImageModal((prev) => !prev);
         }
     };
 
-    const [check, setCheck]=useState(false);
-    const handleCheckbox=()=>{
-        setCheck(prev=>!prev);
-    }
+    const [check, setCheck] = useState(false);
+    const handleCheckbox = () => {
+        setCheck((prev) => !prev);
+    };
 
-    const [terms,setTerms]=useState(false);
-    const handleTerms=()=>{
-        console.log("Pressed")
+    const [terms, setTerms] = useState(false);
+    const handleTerms = () => {
+        console.log("Pressed");
     };
 
     return (
@@ -204,7 +204,12 @@ const Register = () => {
                                 <Text className="text-[#f0f4ff] font-[Nunito-Bold]">
                                     Upload Profile Picture
                                 </Text>
-                                <Fontisto name="picture" size={18} color="#f0f4ff" className="ml-5" />
+                                <Fontisto
+                                    name="picture"
+                                    size={18}
+                                    color="#f0f4ff"
+                                    className="ml-5"
+                                />
                             </TouchableOpacity>
                         )}
                     </View>
@@ -406,13 +411,26 @@ const Register = () => {
                     {/* terms and condition */}
                     <View className="mt-5 flex flex-row w-full items-center justify-start">
                         <TouchableOpacity onPress={handleCheckbox}>
-                            <Fontisto name={check?"checkbox-active":"checkbox-passive"} size={15} color="#291d89" />
+                            <Fontisto
+                                name={
+                                    check
+                                        ? "checkbox-active"
+                                        : "checkbox-passive"
+                                }
+                                size={15}
+                                color="#291d89"
+                            />
                         </TouchableOpacity>
-                        <Text className="ml-2 text-[#291d89]"><Text onPress={handleTerms} className="underline">Terms and conditions</Text> are applicable.</Text>
+                        <Text className="ml-2 text-[#291d89]">
+                            <Text onPress={handleTerms} className="underline">
+                                Terms and conditions
+                            </Text>{" "}
+                            are applicable.
+                        </Text>
                     </View>
                     {/* Apply Now Button */}
                     <TouchableOpacity
-                        className={`rounded-xl my-10 py-3 ${check?"bg-[#4E67EB]":"bg-[#8b9df3]"} shadow-md shadow-blue-400 `}
+                        className={`rounded-xl my-10 py-3 ${check ? "bg-[#4E67EB]" : "bg-[#8b9df3]"} shadow-md shadow-blue-400 `}
                         onPress={handleSubmit}
                         disabled={!check}
                     >
@@ -438,16 +456,17 @@ const Register = () => {
                         handleModal={handleModal}
                     />
                 )}
-                {
-                    imageModal &&
+                {imageModal && (
                     <AlertModal
                         isVisible={imageModal}
                         content="Please select an Image"
                         header="Alert"
                         button="Done"
-                        handleModal={()=>{setImageModal(false)}}
+                        handleModal={() => {
+                            setImageModal(false);
+                        }}
                     />
-                }
+                )}
             </ScrollView>
         </LinearGradient>
     );

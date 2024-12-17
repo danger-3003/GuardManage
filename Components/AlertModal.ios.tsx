@@ -6,7 +6,7 @@ import {Modal, View, Text, Pressable, StatusBar} from "react-native";
 const AlertModal=({isVisible,handleModal,content,header,button})=>{
     return(
         <>
-        <StatusBar barStyle="light-content" backgroundColor="#000000"/>
+        {/* <StatusBar barStyle="light-content" backgroundColor="#000000"/> */}
         <Modal animationType="fade" transparent={true} visible={isVisible}>
             <View className="flex-1 items-center justify-center bg-[#0000008a]" style={{backgroundColor:"#0000008a"}}>
                 <View className="bg-[#e6e6e6] rounded-2xl flex items-center justify-center flex-col pt-7 w-[60%]" style={{backgroundColor:"#e6e6e6"}}>

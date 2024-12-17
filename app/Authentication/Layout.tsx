@@ -50,11 +50,11 @@ const Layout = () => {
                     </View>
                     <View className="mt-20">
                         <TouchableOpacity className="bg-[#F0F4FF] rounded-xl my-2 w-44 py-3 px-5 flex flex-row items-center justify-between shadow-lg" onPress={()=>{router.push("/Authentication/Register")}}>
-                            <Text className="text-[#291D89] font-[Nunito-Bold] text-xl text-center">Register</Text>
+                            <Text className="text-[#291D89] font-[Nunito-Bold] text-xl w-24 text-left">Register</Text>
                             <Ionicons name="caret-back" size={15} color="#291D89" className="rotate-180"/>
                         </TouchableOpacity> 
                         <TouchableOpacity className="border-2 border-[#F0F4FF] bg-[#586ac5] rounded-xl my-2 w-44 py-3 px-5 flex flex-row items-center justify-between shadow-lg" onPress={getLogin}>
-                            <Text className="text-[#F0F4FF] font-[Nunito-Bold] text-xl text-center">Login</Text>
+                            <Text className="text-[#F0F4FF] font-[Nunito-Bold] text-xl w-24 text-left">Login</Text>
                             <Ionicons name="caret-back" size={15} color="#F0F4FF" className="rotate-180"/>
                         </TouchableOpacity>
                     </View>

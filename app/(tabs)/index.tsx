@@ -21,10 +21,11 @@ import Entypo from "@expo/vector-icons/Entypo";
 import Feather from "@expo/vector-icons/Feather";
 import * as Location from "expo-location";
 import * as Network from "expo-network";
-import AlertModal from "../../Components/AlertModal";
+import AlertModal from "../../Components/AlertModal.android";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Loader from "../../Components/Loader";
 
 const index = () => {
     const date = new Date();
@@ -77,8 +78,8 @@ const index = () => {
     const [isConnected, setIsConnected] = useState(null);
     const [lModal, setLModal] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
-    const [netModal, setNetModal] = useState(false);    
-    const [curr,setCurr] = useState(date.getDate());
+    const [netModal, setNetModal] = useState(false);
+    const [curr, setCurr] = useState(date.getDate());
 
     const getUserData = async () => {
         const userName = await AsyncStorage.getItem("userName");
@@ -88,9 +89,9 @@ const index = () => {
     const getShiftLocation = async () => {
         const { foreGround }: any =
             await Location.requestForegroundPermissionsAsync();
-        const { backGround }: any =
-            await Location.requestForegroundPermissionsAsync();
-        if (foreGround === "granted" && backGround === "granted") {
+        // const { backGround }: any =
+        //     await Location.requestBackgroundPermissionsAsync();
+        if (foreGround === "granted") {
             alert("Please Grant Permission");
         }
         Location.geocodeAsync(shiftAddress)
@@ -99,7 +100,7 @@ const index = () => {
                 // console.log("work location : ", data);
             })
             .catch((err) => {
-                alert("Try Again");
+                console.log("Try Again");
             });
     };
 
@@ -115,7 +116,8 @@ const index = () => {
     };
 
     const handleLocation = async () => {
-        const { foreGround }: any = await Location.requestForegroundPermissionsAsync();
+        const { foreGround }: any =
+            await Location.requestForegroundPermissionsAsync();
         if (foreGround === "granted") {
             alert("Please Grant Permission");
         }
@@ -128,7 +130,7 @@ const index = () => {
         try {
             liveLocation = await Promise.race([
                 Location.getCurrentPositionAsync(),
-                timeoutPromise
+                timeoutPromise,
             ]);
             setActivity(false);
             setLModal(false);
@@ -151,9 +153,8 @@ const index = () => {
             }
         } catch (error) {
             setActivity(false);
-            if(error)
-            {
-                setLModal(true)
+            if (error) {
+                setLModal(true);
             }
         }
     };
@@ -174,7 +175,7 @@ const index = () => {
 
     useEffect(() => {
         checkInternetConnection();
-    },[isConnected]);
+    }, [isConnected]);
 
     const onRefresh = () => {
         setRefreshing(true);
@@ -236,15 +237,7 @@ const index = () => {
 
     return (
         <View className="flex-1 bg-[#f0f4ff]">
-            {activity && (
-                <View className="flex items-center justify-center bg-[#00000050] w-full h-full absolute z-10">
-                    <ActivityIndicator
-                        size="large"
-                        color="white"
-                        className=""
-                    />
-                </View>
-            )}
+            {activity && <Loader />}
             <AlertModal
                 isVisible={netModal}
                 header="Alert"
@@ -380,7 +373,7 @@ const index = () => {
                                 <Text className="font-[Nunito-Bold] text-xl mb-1">
                                     Current Shift: 5hrs
                                 </Text>
-                                <Text className="text-xl text-red mr-5 font-[Nunito-Regular]">
+                                <Text className="text-lg text-red mr-5 font-[Nunito-Regular]">
                                     {date.toLocaleDateString()}
                                     <Text className="font-[Nunito-Bold]">
                                         {", " + shiftDetails}
@@ -405,24 +398,29 @@ const index = () => {
                                         <TouchableOpacity
                                             key={key}
                                             className="relative flex items-center justify-center flex-col bg-[#4e67eb] mx-2 my-2 p-2 py-2.5 w-11 rounded-md shadow shadow-slate-900"
-                                            onPress={()=>{setCurr(item)}}
+                                            onPress={() => {
+                                                setCurr(item);
+                                            }}
                                         >
                                             <Text
                                                 className={`font-[Nunito-SemiBold] text-[#f0f4ff] mb-2`}
                                             >
                                                 {item}
                                             </Text>
-                                            
-                                            {
-                                                (curr===item)?
+
+                                            {curr === item ? (
                                                 <View className="h-7 w-7 bg-[#f0f4ff] rounded-full flex items-center justify-center">
-                                                    <Text className="text-center text-secondary font-[Nunito-Bold]">{daysArray[key]}</Text>
+                                                    <Text className="text-center text-secondary font-[Nunito-Bold]">
+                                                        {daysArray[key]}
+                                                    </Text>
                                                 </View>
-                                                :
+                                            ) : (
                                                 <View className="h-7 w-7 flex items-center justify-center">
-                                                    <Text className="text-center text-background font-[Nunito-SemiBold]">{daysArray[key]}</Text>
+                                                    <Text className="text-center text-background font-[Nunito-SemiBold]">
+                                                        {daysArray[key]}
+                                                    </Text>
                                                 </View>
-                                            }
+                                            )}
                                         </TouchableOpacity>
                                     );
                                 })}
@@ -435,7 +433,7 @@ const index = () => {
                             Attendance Record
                         </Text>
                         <ScrollView className="mt-4" horizontal={true}>
-                            <View className="px-5 -mx-5 ">
+                            <View className="">
                                 <View className="bg-[#4E67EB] mx-2 px-4 py-3 flex flex-row justify-between items-center shadow-md shadow-slate-500 rounded-lg">
                                     <View className="w-28  flex items-center justify-center">
                                         <Text className="text-center text-[#f0f4ff] font-[Nunito-Bold] text-lg">
