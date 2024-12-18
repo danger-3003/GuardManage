@@ -18,7 +18,7 @@ import { router, useNavigation } from "expo-router";
 import * as Network from "expo-network";
 import React, { useEffect, useState } from "react";
 import * as SplashScreen from "expo-splash-screen";
-import AlertModal from "~/Components/AlertModal.android";
+import AlertModal from "~/app/Components/AlertModal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Layout from "./Authentication/Layout";
 
@@ -33,6 +33,7 @@ const GettingStarted = () => {
         "Nunito-Bold": require("../assets/fonts/Nunito-Bold.ttf"),
         "Nunito-SemiBold": require("../assets/fonts/Nunito-SemiBold.ttf"),
         "Nunito-Regular": require("../assets/fonts/Nunito-Regular.ttf"),
+        "Roboto-Regular": require("../assets/fonts/Roboto-Regular.ttf"),
     });
 
     const handleFirst = async () => {
@@ -156,7 +157,7 @@ const GettingStarted = () => {
                                 header="Alert"
                                 content="You are not connected to internet."
                                 handleModal={handleNotConnected}
-                                button="Okay"
+                                button="OK"
                             />
                         )}
                     </ScrollView>

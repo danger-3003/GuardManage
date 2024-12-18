@@ -11,7 +11,7 @@ import {
     ScrollView,
     TouchableOpacity,
     FlatList,
-    ActivityIndicator,
+    SafeAreaView,
     RefreshControl,
     StatusBar,
 } from "react-native";
@@ -21,11 +21,11 @@ import Entypo from "@expo/vector-icons/Entypo";
 import Feather from "@expo/vector-icons/Feather";
 import * as Location from "expo-location";
 import * as Network from "expo-network";
-import AlertModal from "../../Components/AlertModal.android";
+import AlertModal from "../Components/AlertModal.android.tsx";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Loader from "../../Components/Loader";
+import Loader from "../Components/Loader";
 
 const index = () => {
     const date = new Date();
@@ -236,34 +236,34 @@ const index = () => {
     };
 
     return (
-        <View className="flex-1 bg-[#f0f4ff]">
+        <SafeAreaView className="flex-1 bg-[#f0f4ff]">
             {activity && <Loader />}
             <AlertModal
                 isVisible={netModal}
                 header="Alert"
-                content="You are not connected to internet."
+                content="You are not connected to internet"
                 handleModal={handleNotConnected}
-                button="Okay"
+                button="OK"
             />
             <AlertModal
                 isVisible={lModal}
                 header="Alert"
-                content="Enable Location to proceed."
+                content="Enable Location to proceed"
                 handleModal={handleLModal}
-                button="Okay"
+                button="OK"
             />
             <AlertModal
                 isVisible={modal}
                 content={
                     inLocation
                         ? "Location Confirmed"
-                        : "You are not in the location. Please go to the LOCATION and try again."
+                        : "You are not in the location. Please go to the LOCATION and try again"
                 }
                 header="Alert"
-                button="Okay"
+                button="OK"
                 handleModal={handleModal}
             />
-            <StatusBar barStyle="dark-content" backgroundColor="#fff" />
+            <StatusBar barStyle="dark-content" backgroundColor="white" />
             <ScrollView
                 className="bg-[#f0f4ff] px-5 w-full mb-24"
                 showsVerticalScrollIndicator={false}
@@ -468,7 +468,7 @@ const index = () => {
                     </View>
                 </View>
             </ScrollView>
-        </View>
+        </SafeAreaView>
     );
 };
 

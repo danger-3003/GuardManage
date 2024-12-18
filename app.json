@@ -20,7 +20,7 @@
       [
         "expo-font",
         {
-          "fonts":["/assets/fonts/Nunito-Bold.ttf","/assets/fonts/Nunito-Regular.ttf","/assets/fonts/Nunito-SemiBold.ttf"]
+          "fonts":["./assets/fonts/Nunito-Bold.ttf","./assets/fonts/Nunito-Regular.ttf","./assets/fonts/Nunito-SemiBold.ttf"]
         }
       ]
     ],

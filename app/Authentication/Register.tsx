@@ -11,7 +11,7 @@ import {
     Image,
     StatusBar,
 } from "react-native";
-import AlertModal from "../../Components/AlertModal.android";
+import AlertModal from "../Components/AlertModal";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import Fontisto from "@expo/vector-icons/Fontisto";
@@ -444,7 +444,7 @@ const Register = () => {
                         isVisible={modal}
                         content="Please fill all the fields..."
                         header=""
-                        button="Okay"
+                        button="OK"
                         handleModal={handleModal}
                     />
                 ) : (

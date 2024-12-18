@@ -7,13 +7,15 @@ export default function Layout() {
             screenOptions={{
                 animation: "slide_from_right",
                 animationTypeForReplace: "push",
-                headerShown:false
+                headerShown: false,
             }}
         >
             <Stack.Screen name="index" options={{ headerShown: false }} />
             <Stack.Screen
                 name="Authentication/Layout"
-                options={{ headerShown: false }}
+                options={{ 
+                    headerShown: false
+                }}
             />
             <Stack.Screen
                 name="Authentication/Register"
@@ -23,10 +25,7 @@ export default function Layout() {
                 name="Authentication/Login"
                 options={{ headerShown: false }}
             />
-            <Stack.Screen 
-                name="(tabs)"
-                options={{ headerShown:false }}
-            />
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         </Stack>
     );
 }
