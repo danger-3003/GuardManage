@@ -26,6 +26,7 @@ import {
   BottomSheetModal,
   BottomSheetView,
   BottomSheetModalProvider,
+  BottomSheetBackdrop,
 } from '@gorhom/bottom-sheet';
 import { useEffect, useState, useRef, useCallback } from "react";
 
@@ -83,9 +84,12 @@ const Profile = () => {
         bottomSheetModalRef.current?.present();
       }, []);
 
-    const handleSheetChanges = useCallback((index: number) => {
-        console.log('handleSheetChanges', index);
-    }, []);
+    const renderBackDrop=useCallback((props:any)=>{
+        return(
+            <BottomSheetBackdrop appearsOnIndex={1} disappearsOnIndex={-1} {...props}/>
+        )
+    },[])
+
     const handleLogout = async () => {
         try {
             await AsyncStorage.setItem("isLogin", "false");
@@ -103,7 +107,7 @@ const Profile = () => {
     };
 
     return (
-        <GestureHandlerRootView className="flex-1 h-80">
+        <GestureHandlerRootView className="flex-1">
             <BottomSheetModalProvider>
             <ScrollView className="pb-20 bg-background">
                 <View className="w-full">
@@ -126,7 +130,7 @@ const Profile = () => {
                                 className="h-40 w-40 rounded-full relative -bottom-14 border-[#291d89]"
                                 style={{ borderWidth: 7 }}
                             />
-                            <TouchableOpacity className="absolute -bottom-10 right-0" onPress={handleSelectImage}>
+                            <TouchableOpacity className="absolute -bottom-10 right-0" onPress={handlePresentModalPress}>
                                 <View className="bg-background rounded-full">
                                     <Entypo name="circle-with-plus" size={30} color="#4E67EB" />
                                 </View>
@@ -330,17 +334,22 @@ const Profile = () => {
                     </View>
                 </View>
             </ScrollView>
-            <Button
-                onPress={handlePresentModalPress}
-                title="Present Modal"
-                color="black"
-            />
             <BottomSheetModal
+                backdropComponent={renderBackDrop}
                 ref={bottomSheetModalRef}
-                onChange={handleSheetChanges}
+                handleIndicatorStyle={{backgroundColor:"#291d89",width:50}}
+                backgroundStyle={{backgroundColor:"#f0f4ff",borderRadius:30}}
+                // onChange={handleSheetChanges}
             >
-                <BottomSheetView className="flex-1 h-80">
-                <Text>Awesome 🎉</Text>
+                <BottomSheetView className="flex-1 h-60">
+                    <View className="flex items-center justify-center w-[100vw] flex-row">
+                        <View>
+                            <Text>Upload Photo</Text>
+                        </View>
+                        <View>
+                            <Text>Take Photo</Text>
+                        </View>
+                    </View>
                 </BottomSheetView>
             </BottomSheetModal>
             </BottomSheetModalProvider>
